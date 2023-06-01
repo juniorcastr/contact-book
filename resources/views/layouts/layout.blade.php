@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<script src="{{ asset('js/app.js') }}"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+{{--@include('layouts.navigation')--}}
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ route('contact.index') }}">CRUD</a>
@@ -19,7 +23,10 @@
                 <ul class="navbar-nav ml-auto">
                     @auth
                         <li class="nav-item">
-                            <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="nav-link btn btn-link">Logout</button>
+                            </form>
                         </li>
                     @else
                         <li class="nav-item">

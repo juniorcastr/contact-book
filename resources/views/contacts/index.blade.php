@@ -31,7 +31,7 @@
                         <td>{{ $contact->contact }}</td>
                         <td>{{ $contact->email }}</td>
                         <td>
-                            <div class="btn-group" role="group">
+                            <div>
                                 <a href="{{ route('contact.show', $contact->id) }}" class="btn btn-primary">Visualizar</a>
                                 <a href="{{ route('contact.edit', $contact->id) }}" class="btn btn-success">Editar</a>
                                 <form action="{{ route('contact.destroy', $contact->id) }}" method="POST" style="display:inline">
@@ -53,4 +53,5 @@
         @endif
     </div>
     </body>
+{{--    @include('layouts.navigation')--}}
 @endsection
