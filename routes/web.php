@@ -22,14 +22,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['prefix' => 'contacts'], function () {
-    Route::get('/index', [ContactController::class, 'index'])->name('contacts.index');
-    Route::get('/create', [ContactController::class, 'create'])->name('contacts.create');
-    Route::post('/store', [ContactController::class, 'store'])->name('contacts.store');
-    Route::get('/show/{contact}', [ContactController::class, 'show'])->name('contacts.show');
-    Route::get('/edit/{contact}', [ContactController::class, 'edit'])->name('contacts.edit');
-    Route::put('/update/{contact}', [ContactController::class, 'update'])->name('contacts.update');
-    Route::delete('/delete/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+Route::group(['prefix' => 'contact'], function () {
+    Route::get('/index', [ContactController::class, 'index'])->name('contact.index');
+    Route::get('/create', [ContactController::class, 'create'])->name('contact.create');
+    Route::post('/store', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/show/{contact}', [ContactController::class, 'show'])->name('contact.show');
+    Route::get('/edit/{contact}', [ContactController::class, 'edit'])->name('contact.edit');
+    Route::put('/update/{contact}', [ContactController::class, 'update'])->name('contact.update');
+    Route::delete('/delete/{contact}', [ContactController::class, 'destroy'])->name('contact.destroy');
 });
 
 require __DIR__.'/auth.php';
