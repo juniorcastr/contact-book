@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,6 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::paginate(10);
-//        dd($contacts);
         return view('contacts.index', compact('contacts'));
     }
 
@@ -35,15 +35,23 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
 //        dd($request);
-        $contact = new Contact();
-        $contact->name = $request->name;
-        $contact->contact = $request->contact;
-        $contact->email = $request->email;
-        $contact->save();
 
+        $contact = Contact::where('contact', $request->contact)
+            ->orWhere('email', $request->email)
+            ->first();
+
+        if ($contact) {
+            return redirect()->route('contact.create')
+                ->withErrors(['error' => 'Já existe um contato com o mesmo contato ou email.'])
+                ->withInput();
+        }
+
+        Contact::create($request->validated());
+
+        return redirect()->route('contact.index')->with('success', 'Contato criado com sucesso!');
     }
 
     /**
@@ -54,7 +62,9 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        //
+        $contact = Contact::find($id);
+
+        return view('contacts.show', compact('contact'));
     }
 
     /**
@@ -65,7 +75,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::find($id);
+
+        return view('contacts.edit', compact('contact'));
     }
 
     /**
@@ -75,9 +87,11 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactRequest $request, Contact $contact)
     {
-        //
+        $contact->update($request->validated());
+
+        return redirect()->route('contact.index')->with('success', 'Contato atualizado com sucesso!');
     }
 
     /**
@@ -86,8 +100,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
+
+        return redirect()->route('contact.index')->with('success', 'Contato excluído com sucesso!');
     }
 }

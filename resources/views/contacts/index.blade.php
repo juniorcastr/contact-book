@@ -2,6 +2,11 @@
 
 @section('content')
     <body>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="container">
         <h1>Lista de Contatos</h1>
 
@@ -26,15 +31,15 @@
                         <td>{{ $contact->contact }}</td>
                         <td>{{ $contact->email }}</td>
                         <td>
-{{--                            <div class="btn-group" role="group">--}}
-{{--                                <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-primary">Visualizar</a>--}}
-{{--                                <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-success">Editar</a>--}}
-{{--                                <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" style="display:inline">--}}
-{{--                                    @csrf--}}
-{{--                                    @method('DELETE')--}}
-{{--                                    <button type="submit" class="btn btn-danger">Excluir</button>--}}
-{{--                                </form>--}}
-{{--                            </div>--}}
+                            <div class="btn-group" role="group">
+                                <a href="{{ route('contact.show', $contact->id) }}" class="btn btn-primary">Visualizar</a>
+                                <a href="{{ route('contact.edit', $contact->id) }}" class="btn btn-success">Editar</a>
+                                <form action="{{ route('contact.destroy', $contact->id) }}" method="POST" style="display:inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza de que deseja excluir este contato?')">Excluir</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

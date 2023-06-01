@@ -19,7 +19,7 @@
 
             <div class="mb-3">
                 <label for="contact" class="form-label">Contato:</label>
-                <input type="text" class="form-control" id="contact" name="contact" value="{{ old('contact') }}" required pattern="[0-9]{9}">
+                <input type="text" class="form-control" id="contact" name="contact" value="{{ old('contact') }}" maxlength="9" required pattern="[0-9]{9}">
                 <small class="form-text text-muted">O contato deve ter exatamente 9 dígitos numéricos.</small>
                 @error('contact')
                 <div class="text-danger">{{ $message }}</div>
